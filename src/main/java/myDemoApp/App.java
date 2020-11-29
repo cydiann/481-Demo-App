@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 
@@ -31,8 +34,8 @@ public class App
     }
 
     public static void main(String[] args) {
-      Logger logger = LogManager.getLogger(App.class);
-
+        Logger logger = LogManager.getLogger(App.class);
+        System.out.println(System.getenv("PORT"));
         int port = Integer.parseInt(System.getenv("PORT"));
         port(port);
         logger.error("Current port number:" + port);
