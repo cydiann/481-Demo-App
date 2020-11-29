@@ -17,25 +17,31 @@ class AppTest {
 
     @Test
     public void testFound() {
-       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-       assertTrue(App.search(array, 4));
+       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 5));
+       assertTrue(!App.search(array, 4, 5).isEmpty());
      }
  
      @Test
      public void testNotFound() {
-       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-       assertFalse(App.search(array, 5));
+       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1, 5));
+       assertFalse(App.search(array, 5, 7).isEmpty());
      }
  
      @Test
      public void testEmptyArray() {
        ArrayList<Integer> array = new ArrayList<>();
-       assertFalse(App.search(array, 1));
+       assertTrue(App.search(array, 1, 10).equals("Your values are missing"));
      }
  
      @Test
      public void testNull() {
-       assertFalse(App.search(null, 1));
+       assertTrue(App.search(null, 1, 1).equals("Your values are missing"));
+     }
+
+     @Test
+     public void testItemMissing() {
+       ArrayList<Integer> array = new ArrayList<>(Arrays.asList(1,5));
+       assertTrue(App.search(array, 0, 5).equals("You can\'t expect 0 number"));
      }
  
 }

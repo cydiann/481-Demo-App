@@ -8,8 +8,10 @@ import static spark.Spark.port;
 import static spark.Spark.post;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,20 +25,33 @@ public class App
         return "Hello world.";
     }
 
-    public static boolean search(ArrayList<Integer> array, int e) {
-      System.out.println("inside search");
-      if (array == null) return false;
-
-      for (int elt : array) {
-        if (elt == e) return true;
+    public static String search(ArrayList<Integer> minMaxArray, int itemCount, int guess) {
+      if(minMaxArray == null || minMaxArray.size() <= 1 ) return "Your values are missing";
+      if(itemCount == 0) return "You can\'t expect 0 number";
+      Random rand = new Random();
+      String result = "";
+      int min = minMaxArray.get(0);
+      int max = minMaxArray.get(1);
+      int randomNumber;
+      int difference;
+      for(int i = 0; i < itemCount; i++){
+        randomNumber = rand.nextInt(max - min - 1);
+        difference = randomNumber - guess;
+        result += "[" + randomNumber + " - " + guess + " = " + difference + "] ";
       }
-      return false;
+      return result;
     }
 
     public static void main(String[] args) {
         Logger logger = LogManager.getLogger(App.class);
-        System.out.println(System.getenv("PORT"));
-        int port = Integer.parseInt(System.getenv("PORT"));
+        String portString = System.getenv("PORT");
+        int port;
+        if(portString == null){
+          port = 4567;
+        }
+        else{
+          port = Integer.parseInt(System.getenv("PORT"));
+        }
         port(port);
         logger.error("Current port number:" + port);
 
@@ -64,9 +79,12 @@ public class App
           String input2 = req.queryParams("input2").replaceAll("\\s","");
           int input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          int input3AsInt = Integer.parseInt(input3);
 
-          Map<String, Boolean> map = new HashMap<String, Boolean>();
+          String result = App.search(inputList, input2AsInt, input3AsInt);
+
+          Map<String, String> map = new HashMap<String, String>();
           map.put("result", result);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());

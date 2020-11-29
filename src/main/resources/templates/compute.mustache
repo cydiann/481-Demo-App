@@ -1,11 +1,18 @@
 <title>My application deployed automatically</title>
-  <h1>Hello, World!</h1>
-    Result is {{result}}
+  <h1>Random number difference</h1>
+  <br>
+  <h3>Box1: Minimum and maximum value of your random number<h3>
+  <br>
+  <h3>Box2: How many random numbers you want to recieve<h3>
+  <br>
+  <h3>Box3: Your number<h3>
+    Results are {{result}}
 
 
   <form action="compute" method="post">
-        <textarea name="input1" rows="10" cols="30"></textarea>
-        <textarea name="input2" rows="10" cols="30"></textarea>
+        <textarea name="input1" rows="1" cols="5"></textarea>
+        <textarea name="input2" rows="1" cols="5"></textarea>
+        <textarea name="input3" rows="1" cols="5"></textarea>
         <br>
         <input type="submit">
   </form>
